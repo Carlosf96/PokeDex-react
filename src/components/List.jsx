@@ -1,18 +1,33 @@
 import React from 'react';
-import NoteService from '../services/NoteService';
-import { Link } from 'react-router-dom';
-
+import PokeService from '../services/PokeService';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Pokemon from './Pokemon';
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+  },
+}));
 const List = () => {
+  const classes = useStyles();
   const [isLoading, setIsLoading] = React.useState(true);
-  const [Notes, setNotes] = React.useState([]);
+  const [Pokemons, setPokemons] = React.useState([]);
   const [error, setError] = React.useState(null);
-
+  /**
+   * TODOS:
+   *  Model Data
+   *    make data model filterable by name and type
+   *     make data model globalish
+   *       perhaps will have to do some sort of 
+   *        objection composition with merging objects
+   */
   React.useEffect(()=>{
     (async()=>{
       try {
-        const notes = await NoteService.getNotes();
-        setNotes(notes);
-        console.log(Notes, notes)
+        const pokemons = await PokeService.getPokemons();
+        setPokemons(pokemons.results);
+        console.log(Pokemons, pokemons.results)
       }
       catch(err){
         setError(err);
@@ -22,7 +37,7 @@ const List = () => {
         setIsLoading(false);
       }
     })()
-  })
+  }, [])
   
   if (isLoading) {
     return <div>Is loading</div>;
@@ -31,30 +46,26 @@ const List = () => {
   if (error !== null) {
     return <div>Error: {error.message}</div>;
   }
-  if (!Notes.length) {
+  if (!Pokemons.length) {
     return (
       <div>
-        No Notes found!
+        No Pokemons found!
       </div>
     );
   }
+
   return (
-    <div className="container">
-      <div className='users-section'>
-        {Notes.map(note => {
+    <Grid container className={classes.root}>
+      <Grid item xs={12}>
+        <Grid container spacing={4} justify="center">
+        {Pokemons.map(pokemon => {
           return (
-            <div className='row'>
-              <p className='col s12 center'>
-              {note.title}
-              </p>
-              <p className='col s12 center'>
-              {note.body}
-              </p>
-            </div>
+            <Pokemon key={pokemon.id} pokemon={pokemon} Grid={Grid} Paper={Paper} />
           );
         })}
-      </div>
-    </div>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 };
 export default List;
