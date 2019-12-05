@@ -1,6 +1,22 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+import MenuItem from '@material-ui/core/MenuItem';
+
+let filters = [
+  {
+    value: 'Type',
+    label: 'Type'
+  },
+  {
+    value: 'Name',
+    label: 'Name'
+  },
+  {
+    value: 'NDN',
+    label: 'NDN'
+  }
+];
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -10,6 +26,9 @@ const useStyles = makeStyles(theme => ({
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
+    width: 200,
+  },
+  menu: {
     width: 200,
   },
 }));
@@ -23,10 +42,21 @@ const SearchBar = ({filterByType, handleChange}) => {
             id="standard-search"
             label="Search by type"
             type="search"
-            onChange={handleChange}
             className={classes.textField}
             margin="normal"
-          />
+            // variant='filled'
+            SelectProps={{
+              MenuProps: {
+                className: classes.menu,
+              },
+            }}
+          >
+            {/* {filters.map(filter => (
+              <MenuItem key={filter.value} value={filter.value}>
+                {filter.label}
+              </MenuItem>
+            ))} */}
+          </TextField>
       </div>
     </form>
   )

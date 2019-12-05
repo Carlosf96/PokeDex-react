@@ -31,7 +31,8 @@ const useStyles = makeStyles(theme => ({
     textDecoration: 'none',
   },
   image: {
-    maxWidth: 180,
+    width: '25vh',
+    height: '25vh',
     alignSelf: 'center'
   },
 }));

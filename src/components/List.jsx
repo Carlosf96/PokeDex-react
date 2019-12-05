@@ -28,20 +28,21 @@ const List = () => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [Pokemons, setPokemons] = React.useState([]);
   const [error, setError] = React.useState(null);
-  const [type, setType] = React.useState('');
-  const handleChange = (e) => {
-    e.preventDefault();
-    setType(e.target.value.toLowerCase())
-  };
+  // const [type, setType] = React.useState('');
+  
   const filterByType = (e) => {
     e.preventDefault();
+    let type = e.target[0].value;
     (async() => {
       try {
       const {pokemon} = await PokeService.getPokemonByType(type);
       setPokemons(pokemon);
-      } catch (err) {
-        setError({message: 'Type does not exist'});
-        console.log(err)
+    } catch (err) {
+      setError({message: 'Type does not exist'});
+      console.log(err)
+    } finally {
+        // setType(' ');
+        
       }
     })();
   }
@@ -92,7 +93,7 @@ const List = () => {
     <Grid container className={classes.root}>
       <Grid item xs={12}>
         <Grid item xs={12}>
-          <SearchBar filterByType={filterByType} handleChange={handleChange}/>
+          <SearchBar filterByType={filterByType} />
         </Grid>
         <Grid container spacing={4} justify="center">
         {Pokemons.map(pokemon => {
