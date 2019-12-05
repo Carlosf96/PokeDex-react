@@ -12,13 +12,21 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     minHeight: 220,
     minWidth: 220,
-    padding: theme.spacing(2),
+
     alignContent: 'center',
     color: theme.palette.text.secondary,
   },
   name: {
     color: 'inherit',
-    border: '1px solid black',
+    borderWidth: '.03rem .02rem 0 .02rem',
+    borderStyle: 'solid',
+    borderColor: 'grey',
+    borderRadius: '.1em 0',
+    background: 'transparent',
+      '&:hover': {
+        background: 'grey',
+        color: 'white'
+      },
     outline: 'none',
     textDecoration: 'none',
   },
@@ -30,9 +38,12 @@ const useStyles = makeStyles(theme => ({
 
 const Pokemon = ({Grid, Paper, pokemon}) => {
   const classes = useStyles();
-  console.log(pokemon)
+  if(pokemon.pokemon){
+    pokemon = pokemon.pokemon;
+  }
+  // console.log(pokemon);
   const id = pokemon.url.split('n/').pop().replace(/\//g, '');
-  console.log(id)
+  // console.log(id)
   return (
     <Grid item className='row pokemon-item'>
       <Paper className={classes.paper}>

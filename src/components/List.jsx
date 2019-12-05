@@ -4,30 +4,52 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Pokemon from './Pokemon';
+import SearchBar from './Search';
+import {Link} from 'react-router-dom';
+
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
   },
+  homebutton: {
+    display: 'inline-block',
+    border: '1px solid',
+    borderRadius: '2px',
+    backgroundColor: 'grey',
+    textDecoration: 'none',
+    color: 'white',
+      '&:hover': {
+        backgroundColor: 'black'
+      }
+  }
 }));
 const List = () => {
   const classes = useStyles();
   const [isLoading, setIsLoading] = React.useState(true);
   const [Pokemons, setPokemons] = React.useState([]);
   const [error, setError] = React.useState(null);
-  /**
-   * TODOS:
-   *  Model Data
-   *    make data model filterable by name and type
-   *     make data model globalish
-   *       perhaps will have to do some sort of 
-   *        objection composition with merging objects
-   */
+  const [type, setType] = React.useState('');
+  const handleChange = (e) => {
+    e.preventDefault();
+    setType(e.target.value.toLowerCase())
+  };
+  const filterByType = (e) => {
+    e.preventDefault();
+    (async() => {
+      try {
+      const {pokemon} = await PokeService.getPokemonByType(type);
+      setPokemons(pokemon);
+      } catch (err) {
+        setError({message: 'Type does not exist'});
+        console.log(err)
+      }
+    })();
+  }
   React.useEffect(()=>{
     (async()=>{
       try {
-        const pokemons = await PokeService.getPokemons();
-        setPokemons(pokemons.results);
-        console.log(Pokemons, pokemons.results)
+        const {results} = await PokeService.getPokemons();
+        setPokemons(results);
       }
       catch(err){
         setError(err);
@@ -44,7 +66,19 @@ const List = () => {
   }
 
   if (error !== null) {
-    return <div>Error: {error.message}</div>;
+    return (
+      <div>
+        <p>
+        Error: {error.message}
+        </p>
+        <Link
+          to='/'
+          className={classes.homebutton}
+        >
+          Go home
+        </Link>
+      </div>
+      );
   }
   if (!Pokemons.length) {
     return (
@@ -57,6 +91,9 @@ const List = () => {
   return (
     <Grid container className={classes.root}>
       <Grid item xs={12}>
+        <Grid item xs={12}>
+          <SearchBar filterByType={filterByType} handleChange={handleChange}/>
+        </Grid>
         <Grid container spacing={4} justify="center">
         {Pokemons.map(pokemon => {
           return (

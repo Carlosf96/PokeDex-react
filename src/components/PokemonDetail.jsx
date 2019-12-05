@@ -22,7 +22,7 @@ const PokemonDetail = () => {
       </h1>
       {
         sprites ? 
-        <img src={sprites["front_default"]} alt='bzz'/> 
+        <img src={sprites["front_default"]} alt='pokemon_sprite'/> 
         : 
         <p>No Image</p>
       }
@@ -47,9 +47,7 @@ const PokemonDetail = () => {
         :
         <p>No types</p>
       }
-      <Link
-        to='/'
-      >
+      <Link to='/'>
         Home
       </Link>
     </Paper>
