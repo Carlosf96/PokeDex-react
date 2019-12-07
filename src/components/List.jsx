@@ -5,6 +5,8 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Pokemon from './Pokemon';
 import SearchBar from './Search';
+import SelectFilter from './SelectFilter';
+
 import {Link} from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
@@ -28,23 +30,31 @@ const List = () => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [Pokemons, setPokemons] = React.useState([]);
   const [error, setError] = React.useState(null);
-  // const [type, setType] = React.useState('');
-  
-  const filterByType = (e) => {
+  const [filter, setFilter] = React.useState('');
+  let PokemonList;
+  const changeFilter = (e) => {
+    let filter = e.target.value
+    setFilter(filter)
+  }
+  const filterBy = (e) => {
     e.preventDefault();
     let type = e.target[0].value;
     (async() => {
       try {
-      const {pokemon} = await PokeService.getPokemonByType(type);
-      setPokemons(pokemon);
+      if(filter === 'type'){
+        const {pokemon} = await PokeService.getPokemonByType(type);
+        setPokemons(pokemon);
+      } else {
+        const {forms} = await PokeService.getPokemonById(type);
+        setPokemons(forms);
+        // console.log(forms);
+      }
     } catch (err) {
       setError({message: 'Type does not exist'});
-      console.log(err)
-    } finally {
-        // setType(' ');
-        
-      }
-    })();
+      // console.log(err)
+    }
+  })();
+    e.target[0].value = '';
   }
   React.useEffect(()=>{
     (async()=>{
@@ -87,20 +97,23 @@ const List = () => {
         No Pokemons found!
       </div>
     );
+  } else {
+    PokemonList = () => Pokemons.map((pokemon, idx) => {
+      return (
+        <Pokemon key={pokemon.id} idx={idx} pokemon={pokemon} Grid={Grid} Paper={Paper} />
+      );
+    })
   }
 
   return (
     <Grid container className={classes.root}>
       <Grid item xs={12}>
         <Grid item xs={12}>
-          <SearchBar filterByType={filterByType} />
+          <SelectFilter changeFilter={changeFilter} filter={filter}/>
+          <SearchBar filterBy={filterBy} filter={filter} />
         </Grid>
-        <Grid container spacing={4} justify="center">
-        {Pokemons.map(pokemon => {
-          return (
-            <Pokemon key={pokemon.id} pokemon={pokemon} Grid={Grid} Paper={Paper} />
-          );
-        })}
+        <Grid container spacing={1} justify="center">
+          <PokemonList/>
         </Grid>
       </Grid>
     </Grid>

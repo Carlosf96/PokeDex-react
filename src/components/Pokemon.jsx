@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     minHeight: 220,
     minWidth: 220,
-
+    padding: '0px',
     alignContent: 'center',
     color: theme.palette.text.secondary,
   },
@@ -20,11 +20,11 @@ const useStyles = makeStyles(theme => ({
     color: 'inherit',
     borderWidth: '.03rem .02rem 0 .02rem',
     borderStyle: 'solid',
-    borderColor: 'grey',
+    borderColor: 'rgb(204, 175, 223)',
     borderRadius: '.1em 0',
     background: 'transparent',
       '&:hover': {
-        background: 'grey',
+        background: 'rgb(204, 175, 223)',
         color: 'white'
       },
     outline: 'none',
@@ -39,12 +39,18 @@ const useStyles = makeStyles(theme => ({
 
 const Pokemon = ({Grid, Paper, pokemon}) => {
   const classes = useStyles();
+  let id;
   if(pokemon.pokemon){
     pokemon = pokemon.pokemon;
   }
   // console.log(pokemon);
-  const id = pokemon.url.split('n/').pop().replace(/\//g, '');
-  // console.log(id)
+  if(pokemon.url.includes('form')){
+    id = pokemon.url.split('m/').pop().replace(/\//g, '');
+
+  } else {
+    id = pokemon.url.split('n/').pop().replace(/\//g, '');
+  }
+  const pokeName = [...String(pokemon.name)][0].toUpperCase() + [...String(pokemon.name)].slice(1).join('');
   return (
     <Grid item className='row pokemon-item'>
       <Paper className={classes.paper}>
@@ -52,7 +58,7 @@ const Pokemon = ({Grid, Paper, pokemon}) => {
         className={classes.name}
         to={`/${pokemon.name}`}
         >
-          {pokemon.name}
+          {pokeName}
         </Link>
         <img 
         className={classes.image}

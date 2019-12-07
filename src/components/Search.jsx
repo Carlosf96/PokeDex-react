@@ -1,22 +1,6 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
-
-let filters = [
-  {
-    value: 'Type',
-    label: 'Type'
-  },
-  {
-    value: 'Name',
-    label: 'Name'
-  },
-  {
-    value: 'NDN',
-    label: 'NDN'
-  }
-];
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -27,35 +11,42 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     width: 200,
+    '& label.Mui-focused': {
+      color: 'rgb(204, 175, 223)',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: 'rgb(204, 175, 223)',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'red',
+      },
+      '&:hover fieldset': {
+        borderColor: 'yellow',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'green',
+      },
+    },
   },
   menu: {
     width: 200,
   },
+  
 }));
 
-const SearchBar = ({filterByType, handleChange}) => {
+const SearchBar = ({filterBy, filter}) => {
   const classes = useStyles();
   return (
-    <form onSubmit={filterByType}>
+    <form onSubmit={filterBy}>
       <div>
       <TextField
             id="standard-search"
-            label="Search by type"
+            label={`Search by ${filter || 'name'}`}
             type="search"
             className={classes.textField}
             margin="normal"
-            // variant='filled'
-            SelectProps={{
-              MenuProps: {
-                className: classes.menu,
-              },
-            }}
           >
-            {/* {filters.map(filter => (
-              <MenuItem key={filter.value} value={filter.value}>
-                {filter.label}
-              </MenuItem>
-            ))} */}
           </TextField>
       </div>
     </form>
