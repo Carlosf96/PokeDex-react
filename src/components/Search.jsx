@@ -32,7 +32,6 @@ const useStyles = makeStyles(theme => ({
   menu: {
     width: 200,
   },
-  
 }));
 
 const SearchBar = ({filterBy, filter}) => {
