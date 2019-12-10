@@ -4,7 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Pokemon from "./Pokemon";
-import SearchBar from "./Search";
+// import SearchBar from "./Search";
+import SearchAsync from './SearchAsync';
 import SelectFilter from "./SelectFilter";
 import { Link } from "react-router-dom";
 
@@ -35,16 +36,21 @@ const List = () => {
     let filter = e.target.value;
     setFilter(filter);
   };
-  const filterBy = async e => {
+
+  const filterBy = e => {
     e.preventDefault();
     let type = e.target[0].value;
+    // Extract this as a service
+
     (async () => {
       try {
         if (filter === "type") {
-          const { pokemon } = await PokeService.getPokemonByType(type);
+          const pokeType = type.toLowerCase();
+          const { pokemon } = await PokeService.getPokemonByType(pokeType);
           setPokemons(pokemon);
         } else {
-          const { forms } = await PokeService.getPokemonById(type);
+          const pokeName = type.toLowerCase();
+          const { forms } = await PokeService.getPokemonById(pokeName);
           setPokemons(forms);
         }
       } catch (err) {
@@ -70,14 +76,14 @@ const List = () => {
   if (isLoading) {
     return <div>Is loading</div>;
   }
-
+  // Move logic to list
   if (error !== null) {
     return (
       <div>
         <p>Error: {error.message}</p>
-        <Link to="/" className={classes.homebutton}>
+        {/* <Link to="/" className={classes.homebutton}>
           Go home
-        </Link>
+        </Link> */}
       </div>
     );
   }
@@ -89,13 +95,13 @@ const List = () => {
       <Grid item xs={12}>
         <Grid item xs={12}>
           <SelectFilter changeFilter={changeFilter} filter={filter} />
-          <SearchBar filterBy={filterBy} filter={filter} />
+          <SearchAsync filterBy={filterBy} filter={filter}/> 
         </Grid>
         <Grid container spacing={1} justify="center">
           {Pokemons.map((pokemon, idx) => {
             return (
               <Pokemon
-                key={pokemon.id}
+                key={idx}
                 idx={idx}
                 pokemon={pokemon}
                 Grid={Grid}

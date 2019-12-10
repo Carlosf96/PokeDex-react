@@ -8,13 +8,13 @@ import Header from './components/Header';
 function App() {
   return (
     <Router>
-      <Switch>
-        <div className="App">
-          <Header/>
-          <Route exact path='/' component={List}/>
-          <Route exact path='/:name/' component={PokemonDetail}/>
-        </div>
-      </Switch>
+      <div className='App '>
+        <Header/>
+        <Switch>
+          <Route path='/:name/' component={PokemonDetail}/>
+          <Route path='/' component={List}/>
+        </Switch>
+      </div>
     </Router>
   );
 }

@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const NextBtn = ({id, Link}) => {
+const BckBtn = ({id, Link}) => {
   const classes = useStyles();
   return (
     <div>
@@ -22,10 +22,10 @@ const NextBtn = ({id, Link}) => {
       to={`/${id}`}
       className={classes.button}
       >
-      Next
+      Back
       </Link>
     </div>
   )
 }
 
-export default NextBtn;
+export default BckBtn;

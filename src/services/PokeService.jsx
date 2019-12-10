@@ -9,14 +9,26 @@ const PokeService = (() => {
     const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
     return Promise.resolve(res.data);
   };
-  const getPokemonByType = async (name) => {
-    const res = await axios.get(`https://pokeapi.co/api/v2/type/${name}`);
+  const getPokemonByType = async (type) => {
+    const res = await axios.get(`https://pokeapi.co/api/v2/type/${type}`);
     return Promise.resolve(res.data);
+  };
+  const getPokeesByFilter = async (filter, type) => {
+    if(filter === 'undefined' || filter === 'name'){
+      const pokeName = filter.toLowerCase();
+      console.log()
+     return await getPokemonById(pokeName);
+    } else if(filter === 'type') {
+     return await getPokemonByType(type);
+    } else {
+      return await getPokemons();
+    }
   };
   return {
     getPokemons,
     getPokemonById,
     getPokemonByType,
+    getPokeesByFilter,
   };
 })();
 

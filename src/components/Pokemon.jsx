@@ -62,7 +62,9 @@ const Pokemon = ({Grid, Paper, pokemon}) => {
         </Link>
         <img 
         className={classes.image}
-        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}></img>
+        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
+        alt='Pokemon'
+        ></img>
       </Paper>
     </Grid >
   )
