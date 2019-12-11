@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import * as url from './pokeBall.jpg';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,10 +24,10 @@ const useStyles = makeStyles(theme => ({
     borderColor: 'rgb(204, 175, 223)',
     borderRadius: '.1em 0',
     background: 'transparent',
-      '&:hover': {
-        background: 'rgb(204, 175, 223)',
-        color: 'white'
-      },
+    '&:hover': {
+      background: 'rgb(204, 175, 223)',
+      color: 'white'
+    },
     outline: 'none',
     textDecoration: 'none',
   },
@@ -37,16 +38,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Pokemon = ({Grid, Paper, pokemon}) => {
+const Pokemon = ({ Grid, Paper, pokemon }) => {
   const classes = useStyles();
   let id;
-  if(pokemon.pokemon){
+  if (pokemon.pokemon) {
     pokemon = pokemon.pokemon;
   }
   // console.log(pokemon);
-  if(pokemon.url.includes('form')){
+  if (pokemon.url.includes('form')) {
     id = pokemon.url.split('m/').pop().replace(/\//g, '');
-
   } else {
     id = pokemon.url.split('n/').pop().replace(/\//g, '');
   }
@@ -55,16 +55,17 @@ const Pokemon = ({Grid, Paper, pokemon}) => {
     <Grid item className='row pokemon-item'>
       <Paper className={classes.paper}>
         <Link
-        className={classes.name}
-        to={`/${pokemon.name}`}
+          className={classes.name}
+          to={`/${pokemon.name}`}
         >
           {pokeName}
         </Link>
-        <img 
-        className={classes.image}
-        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
-        alt='Pokemon'
-        ></img>
+        {
+          <img
+            className={classes.image}
+            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
+            alt='pokemon'
+          /> || <h1>Loading....</h1>}
       </Paper>
     </Grid >
   )

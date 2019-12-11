@@ -11,8 +11,8 @@ function App() {
       <div className='App '>
         <Header/>
         <Switch>
+          <Route exact path='/' component={List}/>
           <Route path='/:name/' component={PokemonDetail}/>
-          <Route path='/' component={List}/>
         </Switch>
       </div>
     </Router>

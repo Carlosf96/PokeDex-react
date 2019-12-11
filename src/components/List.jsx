@@ -4,10 +4,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Pokemon from "./Pokemon";
-// import SearchBar from "./Search";
 import SearchAsync from './SearchAsync';
 import SelectFilter from "./SelectFilter";
-import { Link } from "react-router-dom";
+
+// Restyle to make images and text more responsive
+// Change from one input field two
+// add lazy loader using react supspense
+// add useMemo to fetching data function
+// perhaps add  
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -25,6 +29,7 @@ const useStyles = makeStyles(() => ({
     }
   }
 }));
+
 const List = () => {
   const classes = useStyles();
   const [isLoading, setIsLoading] = React.useState(true);
@@ -40,25 +45,41 @@ const List = () => {
   const filterBy = e => {
     e.preventDefault();
     let type = e.target[0].value;
+
     // Extract this as a service
 
+    if(!type && filter === 'type'){
+      setError({ message: 'Please enter a Type'})
+      return;
+    } else if(!type && filter === 'name'){
+      setError({ message: 'Please enter a Name'})
+      return;
+    }
+
     (async () => {
-      try {
         if (filter === "type") {
-          const pokeType = type.toLowerCase();
-          const { pokemon } = await PokeService.getPokemonByType(pokeType);
-          setPokemons(pokemon);
+          try {
+            const pokeType = type.toLowerCase();
+            const { pokemon } = await PokeService.getPokemonByType(pokeType);
+            setPokemons(pokemon);
+          } catch (err){
+            setError({ message: 'Type does not exist'})
+          }
         } else {
-          const pokeName = type.toLowerCase();
-          const { forms } = await PokeService.getPokemonById(pokeName);
-          setPokemons(forms);
+          try {
+            const pokeName = type.toLowerCase();
+            const { forms } = await PokeService.getPokemonById(pokeName);
+            setPokemons(forms);
+          } catch(err){
+            setError({ message: 'Pokemon does not exist'})
+          }
         }
-      } catch (err) {
-        setError({ message: "Type does not exist" });
-      }
     })();
+
     e.target[0].value = "";
+  
   };
+  
   React.useEffect(() => {
     (async () => {
       try {
@@ -76,29 +97,22 @@ const List = () => {
   if (isLoading) {
     return <div>Is loading</div>;
   }
-  // Move logic to list
-  if (error !== null) {
-    return (
-      <div>
-        <p>Error: {error.message}</p>
-        {/* <Link to="/" className={classes.homebutton}>
-          Go home
-        </Link> */}
-      </div>
-    );
-  }
-  if (!Pokemons.length) {
-    return <div>No Pokemons found!</div>;
-  }
+
   return (
     <Grid container className={classes.root}>
       <Grid item xs={12}>
         <Grid item xs={12}>
           <SelectFilter changeFilter={changeFilter} filter={filter} />
-          <SearchAsync filterBy={filterBy} filter={filter}/> 
+        </Grid>
+        <Grid item xs={12}>
+          <SearchAsync filterBy={filterBy} filter={filter}/>
+            {error ? <div>{error.message}</div> : ''}
         </Grid>
         <Grid container spacing={1} justify="center">
-          {Pokemons.map((pokemon, idx) => {
+          {!Pokemons ? 
+          <div>No pokemons found!</div>  
+          :
+          Pokemons.map((pokemon, idx) => {
             return (
               <Pokemon
                 key={idx}
