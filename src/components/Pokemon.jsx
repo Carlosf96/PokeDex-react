@@ -38,23 +38,20 @@ const useStyles = makeStyles(theme => ({
     alignSelf: 'center'
   },
 }));
-
+// DONT INJECT comps
 const Pokemon = ({ Grid, Paper, pokemon }) => {
   const classes = useStyles();
-  if (pokemon.pokemon) {
-    pokemon = pokemon.pokemon;
-  }
-  const pokeName = pokemon.name
+  let {sprites, name} = pokemon;
   return (
     <Grid item className='row pokemon-item'>
       <Paper className={classes.paper}>
         <Link
           className={classes.name}
-          to={`/${pokemon.name}`}
+          to={`/${name}`}
         >
-          {pokeName}
+          {name}
         </Link>
-        <Sprites sprites={pokemon.sprites}/>
+        <Sprites sprites={sprites}/>
       </Paper>
     </Grid >
   )

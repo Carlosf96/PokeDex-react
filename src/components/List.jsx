@@ -1,14 +1,14 @@
 import React from 'react';
-import PokeService from '../services/PokeService';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+
+import PokeService from '../services/PokeService';
 import Pokemon from './Pokemon';
 import SearchName from './SearchName';
 import SearchType from './SearchType';
 
 // Restyle to make images and text more responsive
-// Change from one input field two
 // add lazy loader using react supspense
 // add useMemo to fetching data function
 // perhaps add  
@@ -37,7 +37,7 @@ const useStyles = makeStyles(() => ({
 const List = () => {
   const classes = useStyles();
   const [isLoading, setIsLoading] = React.useState(true);
-  const [Pokemons, setPokemons] = React.useState([]);
+  const [pokemons, setPokemons] = React.useState([]);
   const [error, setError] = React.useState(null);
 
   const Search = e => {
@@ -50,8 +50,8 @@ const List = () => {
         try {
           const pokeType = val.toLowerCase();
           console.log(pokeType)
-          const { pokemon } = await PokeService.getPokemonByType(pokeType);
-          setPokemons(pokemon);
+          const { pokemon: pokemonRes } = await PokeService.getPokemonByType(pokeType);
+          setPokemons(pokemonRes);
         } catch (err) {
           setError({ message: 'Type does not exist' })
         }
@@ -75,7 +75,7 @@ const List = () => {
       let allPokemons = [];
       try {
         let i = 1;
-        let n = (964 / 4)
+        let n = 150;
         while (i < n) {
           const results = await PokeService.getAllPokemons(i);
           allPokemons.push(results)
@@ -104,10 +104,10 @@ const List = () => {
           {error ? <div>{error.message}</div> : ''}
         </Grid>
         <Grid container spacing={1} justify='center'>
-          {!Pokemons ?
+          {!pokemons ?
             <div>No pokemons found!</div>
             :
-            Pokemons.map((pokemon, idx) => {
+            pokemons.map((pokemon, idx) => {
               return (
                 <Pokemon
                   key={idx}
