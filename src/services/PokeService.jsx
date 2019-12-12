@@ -1,6 +1,10 @@
 import axios from 'axios';
 
 const PokeService = (() => {
+  const getAllPokemons = async (n) => {
+    const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${n}`);
+    return Promise.resolve(res.data);
+  }
   const getPokemons = async () => {
     const res = await axios.get("https://pokeapi.co/api/v2/pokemon/?limit=60");
     return Promise.resolve(res.data);
@@ -29,6 +33,7 @@ const PokeService = (() => {
     getPokemonById,
     getPokemonByType,
     getPokeesByFilter,
+    getAllPokemons,
   };
 })();
 

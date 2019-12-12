@@ -1,7 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import * as url from './pokeBall.jpg';
+// import * as url from './pokeBall.jpg';
+import Sprites from './Sprites';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -40,17 +41,10 @@ const useStyles = makeStyles(theme => ({
 
 const Pokemon = ({ Grid, Paper, pokemon }) => {
   const classes = useStyles();
-  let id;
   if (pokemon.pokemon) {
     pokemon = pokemon.pokemon;
   }
-  // console.log(pokemon);
-  if (pokemon.url.includes('form')) {
-    id = pokemon.url.split('m/').pop().replace(/\//g, '');
-  } else {
-    id = pokemon.url.split('n/').pop().replace(/\//g, '');
-  }
-  const pokeName = [...String(pokemon.name)][0].toUpperCase() + [...String(pokemon.name)].slice(1).join('');
+  const pokeName = pokemon.name
   return (
     <Grid item className='row pokemon-item'>
       <Paper className={classes.paper}>
@@ -60,12 +54,7 @@ const Pokemon = ({ Grid, Paper, pokemon }) => {
         >
           {pokeName}
         </Link>
-        {
-          <img
-            className={classes.image}
-            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
-            alt='pokemon'
-          /> || <h1>Loading....</h1>}
+        <Sprites sprites={pokemon.sprites}/>
       </Paper>
     </Grid >
   )

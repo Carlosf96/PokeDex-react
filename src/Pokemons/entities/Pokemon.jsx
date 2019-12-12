@@ -7,6 +7,7 @@ import React from 'react';
       pokemon.types = types;
       pokemon.sprites = sprites;
       pokemon.abilities = abilities;
+      return pokemon
     }
     return Pokemon;
   }
