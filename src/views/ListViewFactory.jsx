@@ -41,13 +41,13 @@ const ListViewFactory = (pokeService) => {
   
     const Search = ({preventDefault, target}) => {
       preventDefault();
-      let val = target[0].value;
+      let val = target[0].value.toLowerCase();
       let valType = target[0].name;
   
       (async () => {
         if (valType === 'Type') {
           try {
-            const pokeType = val.toLowerCase();
+            const pokeType = val;
             console.log(pokeType)
             const { pokemon: pokemonRes } = await pokeService.getPokemonByType(pokeType);
             setPokemons(pokemonRes);
@@ -56,7 +56,7 @@ const ListViewFactory = (pokeService) => {
           }
         } else {
           try {
-            const pokeName = val.toLowerCase();
+            const pokeName = val;
             const { forms } = await pokeService.getPokemonById(pokeName);
             setPokemons(forms);
           } catch (err) {
@@ -71,16 +71,10 @@ const ListViewFactory = (pokeService) => {
   
     React.useEffect(() => {
       (async () => {
-        let allPokemons = [];
         try {
-          let i = 1;
-          let n = 150;
-          while (i < n) {
-            const results = await pokeService.getAllPokemons(i);
-            allPokemons.push(results)
-            i++
-          }
-          setPokemons(allPokemons);
+          const results = await pokeService.getAllPokemons();
+          console.log(results)
+          setPokemons(results);
         } catch (err) {
           setError(err);
           console.log(err);
@@ -93,14 +87,14 @@ const ListViewFactory = (pokeService) => {
     if (isLoading) {
       return <div>Is loading</div>;
     }
-  
+    console.log(pokemons, '2nd')
     return (
       <Grid container className={classes.root}>
         <Grid item xs={12}>
           <Grid item xs={12} className={classes.fields}>
             <SearchName Search={Search} />
             <SearchType Search={Search} />
-            {error ? <div>{error.message}</div> : ''}
+            {error && <div>{error.message}</div>}
           </Grid>
           <Grid container spacing={1} justify='center'>
             {!pokemons ?

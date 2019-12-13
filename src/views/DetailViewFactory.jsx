@@ -30,7 +30,7 @@ const DetailViewFactory = (pokeService) => {
         setPokemonDetails(PokemonData);
         console.log(PokemonData);
       })();
-    }, []);
+    }, [name]);
 
     const { abilities, sprites, types } = pokemonDetails;
     const pokeName =
@@ -54,7 +54,6 @@ const DetailViewFactory = (pokeService) => {
       </div>
     );
   };
-  console.log(DetailView)
   return DetailView;
 }
 

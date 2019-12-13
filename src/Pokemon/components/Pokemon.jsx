@@ -37,6 +37,7 @@ const useStyles = makeStyles(theme => ({
 // DONT INJECT comps
 const Pokemon = ({ Grid, Paper, pokemon }) => {
   const classes = useStyles();
+  console.log('bzzz')
   let {sprites, name} = pokemon;
   return (
     <Grid item className='row pokemon-item'>
