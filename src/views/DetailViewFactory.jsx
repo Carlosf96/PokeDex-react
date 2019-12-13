@@ -2,13 +2,12 @@ import React from "react";
 import { useParams, Link } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import NextBtn from '../Pokemon/components/atoms/NextBtn';
-import BckBtn from '../Pokemon/components/atoms/BckBtn';
-import Sprites from '../Pokemon/components/atoms/Sprites';
-import Abilities from '../Pokemon/components/atoms/Abilities';
-import Types from '../Pokemon/components/atoms/Types';
+import NextBtn from '../Pokemon/atoms/NextBtn';
+import BckBtn from '../Pokemon/atoms/BckBtn';
+import Sprites from '../Pokemon/atoms/Sprites';
+import Abilities from '../Pokemon/atoms/Abilities';
+import Types from '../Pokemon/atoms/Types';
 import '../App.css';
-
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -22,7 +21,7 @@ const DetailViewFactory = (pokeService) => {
   const DetailView = () => {
     const classes = useStyles();
     const { name } = useParams();
-    const [PokemonDetails, setPokemonDetails] = React.useState({});
+    const [pokemonDetails, setPokemonDetails] = React.useState({});
 
     React.useEffect(() => {
       (async () => {
@@ -31,30 +30,31 @@ const DetailViewFactory = (pokeService) => {
         setPokemonDetails(PokemonData);
         console.log(PokemonData);
       })();
-    }, [name]);
+    }, []);
 
-    const { abilities, sprites, types } = PokemonDetails;
+    const { abilities, sprites, types } = pokemonDetails;
     const pokeName =
-      [...String(PokemonDetails.name)][0].toUpperCase() +
-      [...String(PokemonDetails.name)].slice(1).join("");
+      [...String(pokemonDetails.name)][0].toUpperCase() +
+      [...String(pokemonDetails.name)].slice(1).join("");
     
       return (
       <div className={classes.root}>
-        <BckBtn Link={Link} id={PokemonDetails.id-1}/>
+        <BckBtn Link={Link} id={pokemonDetails.id-1}/>
         <Paper className={classes.card}>
           <h1>A {pokeName}</h1>
           <Sprites sprites={sprites}/>
           <h2>National Dex Number</h2>
-          <p>{PokemonDetails.id}</p>
+          <p>{pokemonDetails.id}</p>
           <h2>Abilities</h2>
           <Abilities abilities={abilities}/>
           <h2>Types</h2>
           <Types types={types}/>
         </Paper>
-        <NextBtn Link={Link} id={PokemonDetails.id + 1} />
+        <NextBtn Link={Link} id={pokemonDetails.id + 1} />
       </div>
     );
   };
+  console.log(DetailView)
   return DetailView;
 }
 

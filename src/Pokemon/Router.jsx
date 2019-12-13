@@ -6,7 +6,6 @@ import PokeService from '../services/PokeService';
 import DetailViewFactory from '../views/DetailViewFactory';
 
 const pokeService = PokeService();
-
 const ListView = ListViewFactory(pokeService);
 //const HomeView = HomeViewFactory(pokeService);
 const DetailView = DetailViewFactory(pokeService)
@@ -16,7 +15,7 @@ const PokeRouter = () => {
     <div className='App '>
       <Switch>
         <Route exact path='/' component={ListView}/>
-        <Route path='/:name/' component={DetailView}/>
+        <Route path='/:name' component={DetailView}/>
       </Switch>
     </div>
   );

@@ -1,8 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-// import * as url from './pokeBall.jpg';
-import Sprites from './atoms/Sprites';
+import Sprites from '../atoms/Sprites';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,10 +19,6 @@ const useStyles = makeStyles(theme => ({
   },
   name: {
     color: 'inherit',
-    borderWidth: '.03rem .02rem 0 .02rem',
-    borderStyle: 'solid',
-    borderColor: 'rgb(204, 175, 223)',
-    borderRadius: '.1em 0',
     background: 'transparent',
     '&:hover': {
       background: 'rgb(204, 175, 223)',
@@ -38,6 +33,7 @@ const useStyles = makeStyles(theme => ({
     alignSelf: 'center'
   },
 }));
+
 // DONT INJECT comps
 const Pokemon = ({ Grid, Paper, pokemon }) => {
   const classes = useStyles();

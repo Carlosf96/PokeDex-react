@@ -6,7 +6,7 @@ function App() {
   return (
     <Router>
         <Switch>
-          <Route exact path='/' component={PokeRouter}/>
+          <Route path='/' component={PokeRouter}/>
         </Switch>
     </Router>
   );

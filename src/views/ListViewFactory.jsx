@@ -39,10 +39,10 @@ const ListViewFactory = (pokeService) => {
     const [pokemons, setPokemons] = React.useState([]);
     const [error, setError] = React.useState(null);
   
-    const Search = e => {
-      e.preventDefault();
-      let val = e.target[0].value;
-      let valType = e.target[0].name;
+    const Search = ({preventDefault, target}) => {
+      preventDefault();
+      let val = target[0].value;
+      let valType = target[0].name;
   
       (async () => {
         if (valType === 'Type') {
@@ -65,7 +65,7 @@ const ListViewFactory = (pokeService) => {
         }
       })();
   
-      e.target[0].value = '';
+      target[0].value = '';
   
     };
   
