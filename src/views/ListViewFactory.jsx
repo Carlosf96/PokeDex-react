@@ -3,9 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
-import Pokemon from '../components/Pokemon';
-import SearchName from '../components/SearchName';
-import SearchType from '../components/SearchType';
+import Pokemon from '../Pokemon/components/Pokemon';
+import SearchName from '../Pokemon/components/SearchName';
+import SearchType from '../Pokemon/components/SearchType';
 
 // Restyle to make images and text more responsive
 // add lazy loader using react supspense

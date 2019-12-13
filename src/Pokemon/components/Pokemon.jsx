@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 // import * as url from './pokeBall.jpg';
-import Sprites from './Sprites';
+import Sprites from './atoms/Sprites';
 
 const useStyles = makeStyles(theme => ({
   root: {

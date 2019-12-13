@@ -2,11 +2,11 @@ import React from "react";
 import { useParams, Link } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import NextBtn from '../components/NextBtn';
-import BckBtn from '../components/BckBtn';
-import Sprites from '../components/Sprites';
-import Abilities from '../components/Abilities';
-import Types from '../components/Types';
+import NextBtn from '../Pokemon/components/atoms/NextBtn';
+import BckBtn from '../Pokemon/components/atoms/BckBtn';
+import Sprites from '../Pokemon/components/atoms/Sprites';
+import Abilities from '../Pokemon/components/atoms/Abilities';
+import Types from '../Pokemon/components/atoms/Types';
 import '../App.css';
 
 

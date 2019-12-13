@@ -9,7 +9,10 @@ const ListView = ListViewFactory(pokeService);
 const HomeViewFactory = () => {
   const HomeView = () => {
     return (
-      
+      <div>
+        <Header/>
+        <ListView/>
+      </div>
     )
   };
   return HomeView;
