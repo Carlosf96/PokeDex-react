@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
+
 const useStyles = makeStyles(() => ({
   header: {
     fontSize: "24px",
@@ -8,6 +9,7 @@ const useStyles = makeStyles(() => ({
     textDecoration: "none"
   }
 }));
+
 const Header = () => {
   const classes = useStyles();
   return (
@@ -16,4 +18,5 @@ const Header = () => {
     </Link>
   );
 };
+
 export default Header;
