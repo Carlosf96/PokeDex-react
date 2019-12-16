@@ -1,7 +1,7 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 
-import useStyles from '../../shared/atoms/styles';
+import useStyles from '../../shared/atoms/styles/SearchStyles';
 
 const SearchType = ({handleSearch}) => {
   const classes = useStyles();
