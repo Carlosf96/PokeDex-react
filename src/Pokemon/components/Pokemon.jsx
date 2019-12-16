@@ -37,8 +37,7 @@ const useStyles = makeStyles(theme => ({
 // DONT INJECT comps
 const Pokemon = ({ Grid, Paper, pokemon }) => {
   const classes = useStyles();
-  console.log('bzzz')
-  let {sprites, name} = pokemon;
+  let {sprite, name} = pokemon;
   return (
     <Grid item className='row pokemon-item'>
       <Paper className={classes.paper}>
@@ -48,7 +47,7 @@ const Pokemon = ({ Grid, Paper, pokemon }) => {
         >
           {name}
         </Link>
-        <Sprites sprites={sprites}/>
+        <Sprites sprite={sprite}/>
       </Paper>
     </Grid >
   )

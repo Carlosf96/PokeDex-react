@@ -1,9 +1,9 @@
 import React from 'react';
 // import * as url from './pokeBall.jpg';
 
-const Sprites = ({sprites}) => {
-  return sprites ? (
-    <img src={sprites["front_default"]} alt="pokemon_sprite" />
+const Sprites = ({sprite}) => {
+  return sprite ? (
+    <img src={sprite} alt="pokemon_sprite" />
   ) : (
     <h1>Loading...</h1>
   );

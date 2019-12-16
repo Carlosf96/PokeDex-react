@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useMemo} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -35,41 +35,23 @@ const useStyles = makeStyles(() => ({
 const ListViewFactory = (pokeService) => {
   const ListView = () => {
     const classes = useStyles();
-    const [isLoading, setIsLoading] = React.useState(true);
-    const [pokemons, setPokemons] = React.useState([]);
-    const [error, setError] = React.useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [pokemons, setPokemons] = useState([]);
+    const [error, setError] = useState(null);
+    const [filteredPokemon, setFiltered] = useState([]);
+
+    const handleSearch = e => {
+      e.preventDefault();
+      let val = e.target[0].value.toLowerCase();
+      let valType = e.target[0].name;
+
+      
   
-    const Search = ({preventDefault, target}) => {
-      preventDefault();
-      let val = target[0].value.toLowerCase();
-      let valType = target[0].name;
-  
-      (async () => {
-        if (valType === 'Type') {
-          try {
-            const pokeType = val;
-            console.log(pokeType)
-            const { pokemon: pokemonRes } = await pokeService.getPokemonByType(pokeType);
-            setPokemons(pokemonRes);
-          } catch (err) {
-            setError({ message: 'Type does not exist' })
-          }
-        } else {
-          try {
-            const pokeName = val;
-            const { forms } = await pokeService.getPokemonById(pokeName);
-            setPokemons(forms);
-          } catch (err) {
-            setError({ message: 'Pokemon does not exist' })
-          }
-        }
-      })();
-  
-      target[0].value = '';
+      e.target[0].value = '';
   
     };
   
-    React.useEffect(() => {
+    useEffect(() => {
       (async () => {
         try {
           const results = await pokeService.getAllPokemons();
@@ -87,13 +69,12 @@ const ListViewFactory = (pokeService) => {
     if (isLoading) {
       return <div>Is loading</div>;
     }
-    console.log(pokemons, '2nd')
     return (
       <Grid container className={classes.root}>
         <Grid item xs={12}>
           <Grid item xs={12} className={classes.fields}>
-            <SearchName Search={Search} />
-            <SearchType Search={Search} />
+            <SearchName handleSearch={handleSearch} />
+            <SearchType handleSearch={handleSearch} />
             {error && <div>{error.message}</div>}
           </Grid>
           <Grid container spacing={1} justify='center'>

@@ -33,22 +33,20 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SearchName = ({Search}) => {
+const SearchName = ({hanleSearch}) => {
   const classes = useStyles();
   return (
-    <form onSubmit={Search}>
-      <div>
+    <form onSubmit={hanleSearch}>
       <TextField
             id='standard-search'
-            label={`Search by ${'Name'}`}
+            label='Search By Name'
             type='search'
             className={classes.textField}
             margin='normal'
             name='Name'
             fullWidth
           >
-          </TextField>
-      </div>
+          </TextField>  
     </form>
   )
 }
