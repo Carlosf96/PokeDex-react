@@ -8,18 +8,23 @@ const PokeService = () => {
     let finalData = [];
 
     while (i < n) {
-      const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${i}`)
-      finalData.push(pokemonDTO(res.data));
-      i++
+      try {
+        const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${i}`);
+        finalData.push(pokemonDTO(res.data));
+      } catch (err) {
+        console.log(err);
+      } finally {
+        i++;
+      }
     }
 
     return finalData;
-  }
-  const getPokemonById = async (name) => {
+  };
+  const getPokemonById = async name => {
     const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
     return Promise.resolve(res.data);
   };
-  const getPokemonByType = async (type) => {
+  const getPokemonByType = async type => {
     const res = await axios.get(`https://pokeapi.co/api/v2/type/${type}`);
     return Promise.resolve(res.data);
   };
@@ -27,7 +32,7 @@ const PokeService = () => {
   return {
     getPokemonById,
     getPokemonByType,
-    getAllPokemons,
+    getAllPokemons
   };
 };
 

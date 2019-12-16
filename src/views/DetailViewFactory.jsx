@@ -1,7 +1,8 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
-import { makeStyles } from "@material-ui/core/styles";
+
+import useStyles from '../shared/atoms/styles/DetailStyles';
 import NextBtn from '../Pokemon/atoms/NextBtn';
 import BckBtn from '../Pokemon/atoms/BckBtn';
 import Sprites from '../Pokemon/atoms/Sprites';
@@ -9,14 +10,7 @@ import Abilities from '../Pokemon/atoms/Abilities';
 import Types from '../Pokemon/atoms/Types';
 import '../App.css';
 
-const useStyles = makeStyles(() => ({
-  root: {
-    display: "inline-block"
-  },
-  card: {
-    minWidth: "500px"
-  }
-}));
+
 const DetailViewFactory = (pokeService) => {
   const DetailView = () => {
     const classes = useStyles();
@@ -26,7 +20,6 @@ const DetailViewFactory = (pokeService) => {
     React.useEffect(() => {
       (async () => {
         const PokemonData = await pokeService.getPokemonById(name);
-        console.log(name);
         setPokemonDetails(PokemonData);
         console.log(PokemonData);
       })();
@@ -57,5 +50,5 @@ const DetailViewFactory = (pokeService) => {
   return DetailView;
 }
 
-
 export default DetailViewFactory;
+
